@@ -11,6 +11,8 @@
 */
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 
 #pragma region Declare Functions
@@ -18,6 +20,7 @@ void drawBoard();
 bool checkWin(char player);
 bool checkDraw();
 void chooseSpot(char player);
+void dumbAI(char player);
 #pragma endregion
 
 #pragma region Declare & Initialize Global Variables
@@ -67,7 +70,8 @@ int main()
 		drawBoard();
 
 		//Player 2's turn
-		chooseSpot(player2); // Get Player 2's input.
+		dumbAI(player2); // Get AI's input.
+		//chooseSpot(player2); // Get Player 2's input
 		if (checkWin(player2)) // Check if there was a win
 		{
 			//Clear the screen, draw the board again, output a winning message and break out of the game loop.
@@ -214,4 +218,28 @@ void chooseSpot(char player)
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 }
+
+void dumbAI(char player)
+{
+	srand(time(NULL)); // Initialise random seed
+	std::cout << "\nAI is thinking..." << std::endl; // Display message
+
+	while (true)
+	{
+		//Pick random number between 1 and 9.
+		int choice = rand() % 9 + 1;
+		//Convert input to an index for the board array.
+		int row = (choice - 1) / 3;
+		int column = (choice - 1) % 3;
+
+		//Check if the chosen spot is already taken.
+		if (board[row][column] != 'O' && board[row][column] != 'X') 
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(2)); // Sleep for a few seconds to fake thinking time.
+			board[row][column] = player; //Set the spot on the board to the AI players symbol.
+			break; //Choice has been made, break out of the input validation loop.
+		}
+	}
+}
+
 #pragma endregion
