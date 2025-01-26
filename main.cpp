@@ -34,6 +34,7 @@ char board[3][3]
 };
 #pragma endregion
 
+#pragma region Main Game Loop
 int main()
 {
 	//Game Loop
@@ -95,7 +96,9 @@ int main()
 	system("pause"); //Suspend processing so the player can read the game results.
 	return 0;
 }
+#pragma endregion
 
+#pragma region Define Functions
 void drawBoard()
 {
 	//Welcome Message
@@ -211,3 +214,4 @@ void chooseSpot(char player)
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 }
+#pragma endregion
